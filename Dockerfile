@@ -10,5 +10,7 @@ RUN wget http://www-eu.apache.org/dist/nifi/${NIFI_VERSION}/nifi-${NIFI_VERSION}
     mkdir ${NIFI_HOME}/run ${NIFI_HOME}/logs && \
     apk del wget
 
-CMD ["${NIFI_HOME}/bin/nifi.sh", "run"]
+WORKDIR /opt/local
+RUN ln -s ${NIFI_HOME} /opt/local/nifi 
 
+CMD ["/opt/local/nifi/bin/nifi.sh", "run"]

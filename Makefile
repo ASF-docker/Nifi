@@ -1,17 +1,20 @@
 VERSION = 1.0.0
-REPOSITORY=apacheimages
-PROJECT=nifi
+ORGANIZATION=apacheimages
+REPOSITORY=nifi
 
 all: build push
 	;
 	
 build: Dockerfile
-	docker build -t ${REPOSITORY}/${PROJECT}:${VERSION} .
+	docker build -t ${ORGANIZATION}/${REPOSITORY}:${VERSION} .
+
 push:
-	docker push ${REPOSITORY}/${PROJECT}:${VERSION}
+	#docker push ${ORGANIZATION}/${REPOSITORY}:${VERSION}
+	git add Dockerfile
+	git push origin ${VERSION}
 	
 shell:
-	docker run -it --rm -p 8080:8080 ${REPOSITORY}/${PROJECT}:${VERSION} /bin/sh
+	docker run --name ${REPOSITORY} -it --rm -p 8080:8080 ${ORGANIZATION}/${REPOSITORY}:${VERSION} /bin/sh
 
 run:
-	docker run --rm -p 8080:8080 ${REPOSITORY}/${PROJECT}:${VERSION} 
+	docker run --name ${REPOSITORY} --rm -p 8080:8080 ${ORGANIZATION}/${REPOSITORY}:${VERSION} 
